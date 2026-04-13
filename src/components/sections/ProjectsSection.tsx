@@ -186,7 +186,9 @@ function ProjectImage({ project }: { project: ProjectRow }) {
         {!imgError && src !== "/placeholder.jpg" ? (
           <Image src={src} alt={project.Title ?? "Project image"} fill
             className="object-cover" onError={() => setImgError(true)}
-            sizes="(max-width: 768px) 100vw, 480px" />
+            sizes="(max-width: 768px) 100vw, 480px" 
+            priority
+            />
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#eef1fb] to-[#dde4f8]">
             <span className="text-4xl mb-2">💻</span>
