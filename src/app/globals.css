@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sora: "Sora", sans-serif;
+}
+
+* { box-sizing: border-box; padding: 0; margin: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sora), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 3px; }
+
+.snap-x::-webkit-scrollbar { display: none; }
+.snap-x { -ms-overflow-style: none; scrollbar-width: none; }
