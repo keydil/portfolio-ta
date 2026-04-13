@@ -1,18 +1,29 @@
+"use client";
+
 import { PROCESS_STEPS } from "@/lib/constants";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { useScrollAnimation, staggerStyle } from "@/hooks/useScrollAnimation";
 
 export function ProcessSection() {
+  const heading  = useScrollAnimation({ threshold: 0.1 });
+  const steps    = useScrollAnimation({ threshold: 0.1, delay: 100 });
+  const cards    = useScrollAnimation({ threshold: 0.05, delay: 120 });
+
   return (
     <section id="process" className="py-20 px-6"
       style={{ background: "linear-gradient(180deg, #edf5f2 0%, #eef4fb 100%)" }}>
       <div className="max-w-5xl mx-auto">
-        <SectionHeading pre="How I work" title="My Development Process" highlight="Step by Step" className="mb-16" />
+
+        <div ref={heading.ref} className={`anim-fade-up ${heading.visible ? "in-view" : ""}`}>
+          <SectionHeading pre="How I work" title="My Development Process" highlight="Step by Step" className="mb-16" />
+        </div>
 
         {/* Step indicators */}
-        <div className="flex items-center justify-center mb-10">
+        <div ref={steps.ref} className={`anim-fade ${steps.visible ? "in-view" : ""} flex items-center justify-center mb-10`}>
           {PROCESS_STEPS.map((step, i) => (
             <div key={step.number} className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-[#1a2060] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">
+              <div style={staggerStyle(i, 120)}
+                className={`anim-scale ${steps.visible ? "in-view" : ""} w-10 h-10 rounded-full bg-[#1a2060] text-white text-sm font-bold flex items-center justify-center flex-shrink-0`}>
                 {step.number}
               </div>
               {i < PROCESS_STEPS.length - 1 && (
@@ -24,18 +35,22 @@ export function ProcessSection() {
 
         {/* Step labels */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 text-center">
-          {PROCESS_STEPS.map((step) => (
-            <div key={step.number}>
+          {PROCESS_STEPS.map((step, i) => (
+            <div key={step.number}
+              style={staggerStyle(i, 100)}
+              className={`anim-fade-up ${steps.visible ? "in-view" : ""}`}>
               <h3 className="font-semibold text-[#0d1040] text-base mb-2">{step.title}</h3>
               <p className="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">{step.description}</p>
             </div>
           ))}
         </div>
 
-        {/* Step detail mockup cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {/* Card 1: Discover */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+        {/* Step mockup cards */}
+        <div ref={cards.ref} className="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+          {/* Card 1 */}
+          <div style={staggerStyle(0, 110)}
+            className={`anim-scale ${cards.visible ? "in-view" : ""} bg-white rounded-2xl border border-gray-100 p-5 shadow-sm`}>
             <div className="flex items-center justify-between mb-4">
               <span className="text-sm font-semibold text-[#0d1040]">Project Brief</span>
               <span className="text-gray-300 text-xs">≡</span>
@@ -55,15 +70,16 @@ export function ProcessSection() {
             </div>
           </div>
 
-          {/* Card 2: Build */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          {/* Card 2 */}
+          <div style={staggerStyle(1, 110)}
+            className={`anim-scale ${cards.visible ? "in-view" : ""} bg-white rounded-2xl border border-gray-100 p-5 shadow-sm`}>
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Sprint 3</span>
               <span className="text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-full font-semibold">Active</span>
             </div>
             <div className="space-y-2">
               {[
-                { label: "Auth system",  pct: 100, done: true },
+                { label: "Auth system",  pct: 100, done: true  },
                 { label: "Dashboard UI", pct: 80,  done: false },
                 { label: "API layer",    pct: 60,  done: false },
                 { label: "Tests",        pct: 30,  done: false },
@@ -81,21 +97,17 @@ export function ProcessSection() {
             </div>
           </div>
 
-          {/* Card 3: Deploy */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          {/* Card 3 */}
+          <div style={staggerStyle(2, 110)}
+            className={`anim-scale ${cards.visible ? "in-view" : ""} bg-white rounded-2xl border border-gray-100 p-5 shadow-sm`}>
             <div className="flex items-center justify-between mb-4">
               <span className="text-sm font-semibold text-[#0d1040]">Deployment</span>
               <span className="text-[10px] font-bold bg-green-500 text-white px-2.5 py-1 rounded-full">Live</span>
             </div>
             <div className="space-y-2 mb-4">
-              {[
-                { label: "CI/CD Pipeline", icon: "✓", ok: true },
-                { label: "Unit Tests",     icon: "✓", ok: true },
-                { label: "Lighthouse 99",  icon: "✓", ok: true },
-                { label: "Zero downtime",  icon: "✓", ok: true },
-              ].map(({ label, icon, ok }) => (
+              {["CI/CD Pipeline", "Unit Tests", "Lighthouse 99", "Zero downtime"].map((label) => (
                 <div key={label} className="flex items-center gap-2">
-                  <span className={`w-4 h-4 rounded-full text-[9px] flex items-center justify-center font-bold flex-shrink-0 ${ok ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-400"}`}>{icon}</span>
+                  <span className="w-4 h-4 rounded-full text-[9px] flex items-center justify-center font-bold flex-shrink-0 bg-green-100 text-green-600">✓</span>
                   <span className="text-xs text-gray-600">{label}</span>
                 </div>
               ))}

@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { getComments, postComment } from "@/lib/queries";
 import type { CommentRow } from "@/types/database";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 function timeAgo(dateStr: string | null): string {
   if (!dateStr) return "";
@@ -46,6 +47,9 @@ export function GuestbookSection() {
   const [success, setSuccess] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
+  const heading = useScrollAnimation({ threshold: 0.1 });
+  const content = useScrollAnimation({ threshold: 0.05, delay: 100 });
+
   const fetchComments = () => {
     getComments().then((data) => {
       setComments(data);
@@ -86,14 +90,17 @@ export function GuestbookSection() {
     <section id="testimonials" className="py-20 px-6"
       style={{ background: "linear-gradient(180deg, #eef4fb 0%, #e8f0f8 100%)" }}>
       <div className="max-w-5xl mx-auto">
-        <SectionHeading
-          pre="Say hello"
-          title="Guestbook"
-          subtitle="Leave a message — I read every single one. 👋"
-          className="mb-12"
-        />
+        <div ref={heading.ref} className={`anim-fade-up ${heading.visible ? "in-view" : ""}`}>
+          <SectionHeading
+            pre="Say hello"
+            title="Guestbook"
+            subtitle="Leave a message — I read every single one. 👋"
+            className="mb-12"
+          />
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div ref={content.ref}
+          className={`anim-fade-up ${content.visible ? "in-view" : ""} grid grid-cols-1 lg:grid-cols-5 gap-6`}>
 
           {/* ── Left: form ────────────────────────────────────────────── */}
           <div ref={formRef} className="lg:col-span-2">

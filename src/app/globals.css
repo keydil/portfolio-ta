@@ -22,3 +22,62 @@ body {
 
 .snap-x::-webkit-scrollbar { display: none; }
 .snap-x { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Scroll animation base states ───────────────────────────────────────── */
+
+.anim-fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--stagger-delay, 0ms);
+}
+.anim-fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.anim-fade {
+  opacity: 0;
+  transition: opacity 0.65s ease;
+  transition-delay: var(--stagger-delay, 0ms);
+}
+.anim-fade.in-view {
+  opacity: 1;
+}
+
+.anim-scale {
+  opacity: 0;
+  transform: scale(0.96) translateY(16px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--stagger-delay, 0ms);
+}
+.anim-scale.in-view {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.anim-slide-left {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--stagger-delay, 0ms);
+}
+.anim-slide-left.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.anim-slide-right {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--stagger-delay, 0ms);
+}
+.anim-slide-right.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}

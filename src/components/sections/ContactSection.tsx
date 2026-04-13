@@ -1,20 +1,26 @@
+"use client";
+
 import { PERSONAL } from "@/lib/constants";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 export function ContactSection() {
+  const section = useScrollAnimation({ threshold: 0.15 });
+
   return (
     <section id="contact" className="px-6 py-12">
       <div className="max-w-5xl mx-auto">
-        <div className="relative rounded-3xl overflow-hidden px-10 py-14 flex flex-col md:flex-row items-center justify-between gap-8"
+        <div ref={section.ref}
+          className={`anim-scale ${section.visible ? "in-view" : ""} relative rounded-3xl overflow-hidden px-10 py-14 flex flex-col md:flex-row items-center justify-between gap-8`}
           style={{ background: "linear-gradient(135deg, #1a2060 0%, #2d3393 50%, #3d44b0 100%)" }}>
 
-          {/* Glow blob */}
           <div className="pointer-events-none absolute top-[-40px] left-[-40px] w-72 h-72 rounded-full opacity-20"
             style={{ background: "radial-gradient(circle, #7c3aed 0%, transparent 70%)", filter: "blur(48px)" }} />
           <div className="pointer-events-none absolute bottom-[-60px] right-[20%] w-56 h-56 rounded-full opacity-10"
             style={{ background: "radial-gradient(circle, #06b6d4 0%, transparent 70%)", filter: "blur(36px)" }} />
 
-          {/* Text */}
-          <div className="relative z-10 max-w-sm">
+          {/* Text — slides from left */}
+          <div className={`anim-slide-left ${section.visible ? "in-view" : ""} relative z-10 max-w-sm`}
+            style={{ "--stagger-delay": "80ms" } as React.CSSProperties}>
             <p className="text-white/60 text-xs font-bold uppercase tracking-widest mb-3">Let&apos;s build together</p>
             <h2 className="text-3xl font-black text-white leading-tight mb-3">
               Got a Project<br />in Mind?
@@ -34,8 +40,9 @@ export function ContactSection() {
             </div>
           </div>
 
-          {/* Code terminal */}
-          <div className="relative z-10 flex-shrink-0">
+          {/* Terminal — slides from right */}
+          <div className={`anim-slide-right ${section.visible ? "in-view" : ""} relative z-10 flex-shrink-0`}
+            style={{ "--stagger-delay": "160ms" } as React.CSSProperties}>
             <div className="w-52 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
               style={{ background: "rgba(13,15,31,0.85)", backdropFilter: "blur(12px)" }}>
               <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-white/5">
