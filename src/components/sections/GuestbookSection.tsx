@@ -102,7 +102,7 @@ export function GuestbookSection() {
 
               {/* Name */}
               <div className="mb-4">
-                <label className="block text-xs font-semibold text-gray-500 mb-1.5">Fadhil Firdaus Adha</label>
+                <label className="block text-xs font-semibold text-gray-500 mb-1.5">Your name</label>
                 <input
                   type="text"
                   value={name}
