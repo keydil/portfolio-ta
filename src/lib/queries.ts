@@ -65,7 +65,7 @@ export async function postComment(
 ): Promise<{ success: boolean; error?: string }> {
   const { error } = await supabase
     .from("portfolio_comments")
-    // @ts-expect-error: supabase insert type mismatch
+    // @ts-expect-error: Database types not generated yet
     .insert({ content, user_name, is_pinned: false });
 
   if (error) return { success: false, error: error.message };
