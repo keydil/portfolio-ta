@@ -6,7 +6,7 @@ import { getProjects, resolveImageUrl } from "@/lib/queries";
 import type { ProjectRow } from "@/types/database";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { useScrollAnimation, staggerStyle } from "@/hooks/useScrollAnimation";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 export function ProjectsSection() {
   const [projects, setProjects]   = useState<ProjectRow[]>([]);
